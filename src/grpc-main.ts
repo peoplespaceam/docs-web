@@ -3,7 +3,7 @@ import { protoFiles } from './generated/proto-manifest';
 import { config, setText, wireLink } from './config';
 
 setText('site-title', config.siteTitle);
-setText('site-subtitle', 'gRPC contracts and grpcui handoff');
+setText('site-subtitle', 'gRPC contracts and live grpcui handoff');
 setText('site-environment', config.siteEnvironment);
 wireLink('grpcui-link', config.grpcUiUrl, 'Set VITE_GRPCUI_URL');
 

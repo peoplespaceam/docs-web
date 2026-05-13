@@ -28,8 +28,7 @@
           <p class="eyebrow">Platform reference</p>
           <h1>One place for REST, GraphQL, and gRPC docs</h1>
           <p class="lede">
-            This site ships the checked-in contracts with the docs build, then layers the right explorer
-            or viewer on top of each protocol.
+            Checked-in contracts, plus live entry points where the current environment actually supports them.
           </p>
           <div class="actions">
             <a class="button button-primary" href="./rest.html">Open REST reference</a>
@@ -46,11 +45,11 @@
             <span class="status-dot status-on" id="rest-status">Configured</span>
           </div>
           <h2>OpenAPI via Scalar</h2>
-          <p>Interactive reference for the Mini App REST surface, backed by the canonical OpenAPI contract.</p>
+          <p>Interactive REST reference for the Mini App surface, backed by the canonical OpenAPI contract.</p>
           <div class="meta">Spec: <code>/specs/miniapp.yaml</code></div>
           <div class="actions">
             <a class="button button-primary" href="./rest.html">Open Scalar</a>
-            <a class="button" id="overview-openapi-link" href="#">Raw OpenAPI</a>
+            <a class="button" id="overview-openapi-link" href="#">Download OpenAPI</a>
           </div>
         </article>
 
@@ -59,12 +58,12 @@
             <span class="protocol">GraphQL</span>
             <span class="status-dot" id="graphql-status">Partially configured</span>
           </div>
-          <h2>SDL + explorer handoff</h2>
-          <p>Browse the canonical SDL, inspect the endpoint, and jump into Apollo Sandbox or GraphiQL when configured.</p>
+          <h2>Schema + live explorer handoff</h2>
+          <p>Review the canonical SDL, inspect the live endpoint, and jump straight into Apollo Sandbox for the active test surface.</p>
           <div class="meta">Schema: <code>/specs/miniapp-graphql-v1.graphql</code></div>
           <div class="actions">
             <a class="button button-primary" href="./graphql.html">Open GraphQL docs</a>
-            <a class="button" id="overview-apollo-link" href="#" target="_blank" rel="noopener">Apollo Sandbox</a>
+            <a class="button" id="overview-apollo-link" href="#" target="_blank" rel="noopener">Open Apollo Sandbox</a>
           </div>
         </article>
 
@@ -73,12 +72,12 @@
             <span class="protocol">gRPC</span>
             <span class="status-dot" id="grpc-status">Partially configured</span>
           </div>
-          <h2>Proto browser + grpcui handoff</h2>
-          <p>Browse tracked protobuf files directly here and jump into grpcui when you have a protected instance available.</p>
+          <h2>Proto browser + live grpcui</h2>
+          <p>Browse tracked protobuf contracts here, then jump into the protected grpcui instance for the active test surface.</p>
           <div class="meta">Contracts synced from <code>contracts/proto</code></div>
           <div class="actions">
             <a class="button button-primary" href="./grpc.html">Open gRPC docs</a>
-            <a class="button" id="overview-grpc-link" href="#" target="_blank" rel="noopener">Open grpcui</a>
+            <a class="button" id="overview-grpc-link" href="#" target="_blank" rel="noopener">Open live grpcui</a>
           </div>
         </article>
       </section>
@@ -87,12 +86,11 @@
         <h2>What this docs site includes</h2>
         <ul class="stack-list">
           <li><strong>Scalar</strong> for REST / OpenAPI.</li>
-          <li><strong>GraphQL contract page</strong> with SDL, endpoint details, and explorer links.</li>
-          <li><strong>gRPC contract page</strong> with synced proto files and grpcui handoff.</li>
+          <li><strong>GraphQL contract page</strong> with schema, endpoint details, and live explorer links.</li>
+          <li><strong>gRPC contract page</strong> with synced proto files and live grpcui handoff.</li>
         </ul>
         <p class="muted">
-          <strong>SpectaQL</strong> is not bundled right now. It overlaps with the GraphQL page and adds another generation layer.
-          If you want static GraphQL reference pages later, we can add it deliberately instead of mixing four competing UIs at once.
+          <strong>SpectaQL</strong> is still not bundled. The current GraphQL page already covers schema review plus live explorer handoff without adding another docs layer.
         </p>
       </section>
     </main>

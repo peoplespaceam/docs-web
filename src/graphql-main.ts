@@ -3,7 +3,7 @@ import graphQlSchema from './generated/miniapp-graphql-v1.graphql?raw';
 import { config, setText, wireBlobLink, wireLink } from './config';
 
 setText('site-title', config.siteTitle);
-setText('site-subtitle', 'GraphQL schema and explorer handoff');
+setText('site-subtitle', 'GraphQL schema and live explorer handoff');
 setText('site-environment', config.siteEnvironment);
 setText('graphql-endpoint', config.graphQlHttpUrl || 'Not configured');
 
