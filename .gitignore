@@ -3,3 +3,5 @@ dist
 .DS_Store
 public/specs/*
 !public/specs/.gitkeep
+!public/specs/miniapp.yaml
+!public/specs/miniapp-graphql-v1.graphql

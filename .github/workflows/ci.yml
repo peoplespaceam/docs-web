@@ -17,23 +17,6 @@ jobs:
       - name: Checkout docs-web
         uses: actions/checkout@v4
 
-      # GITHUB_TOKEN cannot read other private org repos; checkout returns 404 without a PAT.
-      - name: Require CONTRACTS_REPO_TOKEN for private contracts
-        env:
-          CONTRACTS_REPO_TOKEN: ${{ secrets.CONTRACTS_REPO_TOKEN }}
-        run: |
-          if [ -z "${CONTRACTS_REPO_TOKEN}" ]; then
-            echo "::error::Set repository secret CONTRACTS_REPO_TOKEN (fine-grained PAT: Contents read on peoplespaceam/contracts; or classic PAT with repo scope). docs-web CI clones contracts to run sync-specs."
-            exit 1
-          fi
-
-      - name: Checkout contracts
-        uses: actions/checkout@v4
-        with:
-          repository: peoplespaceam/contracts
-          token: ${{ secrets.CONTRACTS_REPO_TOKEN }}
-          path: contracts
-
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -45,8 +28,6 @@ jobs:
         run: npm ci
 
       - name: Build
-        env:
-          CONTRACTS_ROOT: contracts
         run: npm run build
 
       - name: Upload dist artifact

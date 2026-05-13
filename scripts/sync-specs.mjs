@@ -20,16 +20,26 @@ const copies = [
   ['graphql/platform-api/miniapp/v1/schema.graphql', 'miniapp-graphql-v1.graphql'],
 ];
 
-if (!existsSync(contracts)) {
-  console.error(
-    `sync-specs: contracts not found at ${contracts}\n` +
-      'Local: clone peoplespaceam/contracts next to peoplespaceam/docs-web, or set CONTRACTS_ROOT.\n' +
-      'Example: CONTRACTS_ROOT=contracts npm run sync-specs',
-  );
-  process.exit(1);
-}
-
 mkdirSync(outDir, { recursive: true });
+
+if (!existsSync(contracts)) {
+  const missing = copies
+    .map(([, destName]) => join(outDir, destName))
+    .filter((dest) => !existsSync(dest));
+
+  if (missing.length > 0) {
+    console.error(
+      `sync-specs: contracts not found at ${contracts} and checked-in specs are missing:\n` +
+        missing.map((dest) => `  - ${dest}`).join('\n') +
+        '\nLocal: clone peoplespaceam/contracts next to peoplespaceam/docs-web, or set CONTRACTS_ROOT.\n' +
+        'Example: CONTRACTS_ROOT=contracts npm run sync-specs',
+    );
+    process.exit(1);
+  }
+
+  console.log('sync-specs: contracts checkout not found; using checked-in specs');
+  process.exit(0);
+}
 
 for (const [rel, destName] of copies) {
   const src = join(contracts, rel);

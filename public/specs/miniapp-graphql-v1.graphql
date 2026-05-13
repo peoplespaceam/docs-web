@@ -1,0 +1,137 @@
+# PeopleSpaceAM Telegram Mini App BFF — GraphQL v1 (canonical SDL).
+# HTTP: POST /miniapp/graphql/v1 with X-Telegram-Init-Data (same as REST miniapp).
+# Attachments: use REST POST /miniapp/requests and /miniapp/requests/draft (multipart) until GraphQL Upload is introduced.
+
+scalar JSONObject
+
+enum RequestGroup {
+  ATTENDANCE
+}
+
+input RequestTypesFilter {
+  group: RequestGroup!
+  companyId: Int
+}
+
+type MiniAppViewer {
+  telegramUserId: String!
+  linked: Boolean!
+  requiresRelink: Boolean!
+  firstName: String
+  lastName: String
+  associateId: String
+  preferredLanguage: String
+  linkedAt: String
+}
+
+type BalanceRow {
+  availableBalance: Float!
+  availableDays: Float!
+  daysByTheEndOfYear: Float!
+  balanceFromLastYear: Float!
+  usedDaysForCurrentYear: Float!
+  isPrimary: Boolean!
+}
+
+type RequestTypeSummary {
+  id: Int!
+  enum: String!
+  groupId: Int!
+  groupKey: String!
+  title: String!
+  localizedNames: JSONObject
+  iconUrl: String
+  paymentType: String
+  balance: [BalanceRow!]
+  templateKey: String!
+  acceptsFiles: Boolean!
+  canSaveDraft: Boolean!
+  canSubmit: Boolean!
+  blockedReason: String
+}
+
+type RequestFormDefinition {
+  requestTypeId: Int!
+  companyId: Int
+  requestType: JSONObject!
+  template: JSONObject!
+  fields: [JSONObject!]!
+  defaults: JSONObject
+  optionSources: [JSONObject!]
+  actions: JSONObject!
+}
+
+type RequestFormOptions {
+  managers: [JSONObject!]
+  businessTripLocations: [JSONObject!]
+  companyUnits: [JSONObject!]
+  employees: [JSONObject!]
+}
+
+input FormOptionsContextInput {
+  from: String
+  to: String
+  startTime: String
+  endTime: String
+}
+
+input SubmitRequestInput {
+  clientMutationId: String
+  requestTypeId: Int!
+  companyId: Int
+  payload: JSONObject!
+}
+
+input SaveDraftInput {
+  clientMutationId: String
+  requestTypeId: Int!
+  companyId: Int
+  payload: JSONObject!
+}
+
+type SubmitSuccess {
+  requestId: Int!
+  status: String!
+  message: String
+}
+
+type FieldError {
+  path: String!
+  message: String!
+  code: String
+}
+
+type SubmitValidationError {
+  fieldErrors: [FieldError!]!
+}
+
+type SubmitBlocked {
+  reason: String!
+  message: String!
+}
+
+union SubmitRequestPayload = SubmitSuccess | SubmitValidationError | SubmitBlocked
+
+type SaveDraftSuccess {
+  draftId: Int!
+  status: String!
+  message: String
+}
+
+union SaveDraftPayload = SaveDraftSuccess | SubmitValidationError | SubmitBlocked
+
+type Query {
+  viewer: MiniAppViewer!
+  requestTypes(filter: RequestTypesFilter!): [RequestTypeSummary!]!
+  requestForm(requestTypeId: Int!, companyId: Int): RequestFormDefinition!
+  requestFormOptions(
+    requestTypeId: Int!
+    companyId: Int!
+    context: FormOptionsContextInput
+  ): RequestFormOptions!
+}
+
+type Mutation {
+  submitRequest(input: SubmitRequestInput!): SubmitRequestPayload!
+  saveDraft(input: SaveDraftInput!): SaveDraftPayload!
+}
