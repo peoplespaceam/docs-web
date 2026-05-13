@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PeopleSpaceAM Platform Docs — MCP</title>
+  </head>
+  <body>
+    <header class="site-header shell-header">
+      <div class="inner">
+        <div>
+          <strong id="site-title">PeopleSpaceAM Platform Docs</strong>
+          <div class="tag" id="site-subtitle">MCP endpoint strategy and rollout notes</div>
+        </div>
+        <span class="pill" id="site-environment">Current environment</span>
+      </div>
+      <nav class="nav">
+        <a href="./">Overview</a>
+        <a href="./rest.html">REST</a>
+        <a href="./graphql.html">GraphQL</a>
+        <a href="./grpc.html">gRPC</a>
+        <a href="./mcp.html">MCP</a>
+        <a href="./clients.html">Clients</a>
+        <a href="./prompts.html">Prompts</a>
+        <a href="./agents.html">Agents</a>
+      </nav>
+    </header>
+
+    <main class="shell-main section-stack">
+      <section class="card slim-card">
+        <div class="split-row">
+          <div>
+            <p class="eyebrow">MCP</p>
+            <h1>Expose once, reuse across every client</h1>
+            <p class="lede">
+              This section is the rollout contract for a shared remote MCP server: one URL, one auth story, one smoke test, and no bespoke setup drift per teammate.
+            </p>
+          </div>
+          <span class="status-dot" id="mcp-page-status">Template only</span>
+        </div>
+        <div class="endpoint-box">
+          <div><strong>Canonical MCP URL:</strong> <code id="mcp-url">https://mcp.example.com/mcp</code></div>
+          <div><strong>Recommended transport:</strong> <code>HTTP</code></div>
+          <div><strong>Recommended auth:</strong> <code>Authorization: Bearer ...</code></div>
+        </div>
+        <div class="actions">
+          <a class="button button-primary" href="./clients.html">Open client templates</a>
+          <a class="button" href="./agents.html">Open team reuse docs</a>
+        </div>
+      </section>
+
+      <section id="mcp-cards" class="panel-grid"></section>
+      <section id="mcp-snippets" class="panel-grid"></section>
+    </main>
+
+    <script type="module" src="/src/mcp-main.ts"></script>
+  </body>
+</html>

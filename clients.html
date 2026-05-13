@@ -3,14 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PeopleSpaceAM Platform Docs — gRPC</title>
+    <title>PeopleSpaceAM Platform Docs — Clients</title>
   </head>
   <body>
     <header class="site-header shell-header">
       <div class="inner">
         <div>
           <strong id="site-title">PeopleSpaceAM Platform Docs</strong>
-          <div class="tag" id="site-subtitle">gRPC contracts and grpcui handoff</div>
+          <div class="tag" id="site-subtitle">Client install templates and verification steps</div>
         </div>
         <span class="pill" id="site-environment">Current environment</span>
       </div>
@@ -26,24 +26,23 @@
       </nav>
     </header>
 
-    <main class="shell-main">
+    <main class="shell-main section-stack">
       <section class="card slim-card">
-        <p class="eyebrow">gRPC</p>
-        <h1>Protocol contracts</h1>
+        <p class="eyebrow">Client setup</p>
+        <h1>Copy-paste configs for the main agent clients</h1>
         <p class="lede">
-          Browse the synced protobuf files directly here, then open the protected grpcui instance for the active test surface.
+          Use the same MCP URL and auth values everywhere. The only thing that should change between teammates is where they paste the snippet.
         </p>
-        <div class="actions wrap-actions">
-          <a class="button button-primary" id="grpcui-link" href="#" target="_blank" rel="noopener">Open live grpcui</a>
-        </div>
       </section>
 
       <section class="card stack-card">
-        <h2>Proto files</h2>
-        <div id="proto-list" class="proto-list"></div>
+        <h2>Support matrix</h2>
+        <div id="client-matrix"></div>
       </section>
+
+      <section id="client-snippets" class="panel-grid"></section>
     </main>
 
-    <script type="module" src="/src/grpc-main.ts"></script>
+    <script type="module" src="/src/clients-main.ts"></script>
   </body>
 </html>

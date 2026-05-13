@@ -3,14 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PeopleSpaceAM Platform Docs — gRPC</title>
+    <title>PeopleSpaceAM Platform Docs — Agents</title>
   </head>
   <body>
     <header class="site-header shell-header">
       <div class="inner">
         <div>
           <strong id="site-title">PeopleSpaceAM Platform Docs</strong>
-          <div class="tag" id="site-subtitle">gRPC contracts and grpcui handoff</div>
+          <div class="tag" id="site-subtitle">Shared skills, agents, and teammate rollout</div>
         </div>
         <span class="pill" id="site-environment">Current environment</span>
       </div>
@@ -26,24 +26,24 @@
       </nav>
     </header>
 
-    <main class="shell-main">
+    <main class="shell-main section-stack">
       <section class="card slim-card">
-        <p class="eyebrow">gRPC</p>
-        <h1>Protocol contracts</h1>
+        <p class="eyebrow">Team reuse</p>
+        <h1>Skills registry first, named agents second</h1>
         <p class="lede">
-          Browse the synced protobuf files directly here, then open the protected grpcui instance for the active test surface.
+          The clean pattern is: prove a prompt, promote it to a skill, version it in the registry, then bundle stable skills into named agents teammates can trust.
         </p>
-        <div class="actions wrap-actions">
-          <a class="button button-primary" id="grpcui-link" href="#" target="_blank" rel="noopener">Open live grpcui</a>
-        </div>
       </section>
 
+      <section id="agent-cards" class="panel-grid"></section>
+      <section id="registry-snippets" class="panel-grid"></section>
+
       <section class="card stack-card">
-        <h2>Proto files</h2>
-        <div id="proto-list" class="proto-list"></div>
+        <h2>Minimum rollout checklist</h2>
+        <div id="team-checklist"></div>
       </section>
     </main>
 
-    <script type="module" src="/src/grpc-main.ts"></script>
+    <script type="module" src="/src/agents-main.ts"></script>
   </body>
 </html>

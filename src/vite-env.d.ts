@@ -10,6 +10,7 @@ interface ImportMetaEnv {
   readonly VITE_GRAPHQL_EXPLORER_URL: string;
   readonly VITE_APOLLO_SANDBOX_URL: string;
   readonly VITE_GRPCUI_URL: string;
+  readonly VITE_MCP_SERVER_URL: string;
 
   // Backwards compatibility
   readonly VITE_MINIAPP_API_TEST_BASE: string;

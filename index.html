@@ -19,6 +19,10 @@
         <a href="./rest.html">REST</a>
         <a href="./graphql.html">GraphQL</a>
         <a href="./grpc.html">gRPC</a>
+        <a href="./mcp.html">MCP</a>
+        <a href="./clients.html">Clients</a>
+        <a href="./prompts.html">Prompts</a>
+        <a href="./agents.html">Agents</a>
       </nav>
     </header>
 
@@ -26,14 +30,15 @@
       <section class="hero card">
         <div>
           <p class="eyebrow">Platform reference</p>
-          <h1>One place for REST, GraphQL, and gRPC docs</h1>
+          <h1>Contracts, live surfaces, and teammate-ready operator docs</h1>
           <p class="lede">
-            Checked-in contracts, plus live entry points where the current environment actually supports them.
+            One place for protocol references, live handoffs, MCP rollout notes, copy-paste client setup, and reusable prompts / skills / agents.
           </p>
           <div class="actions">
             <a class="button button-primary" href="./rest.html">Open REST reference</a>
-            <a class="button" href="./graphql.html">Open GraphQL docs</a>
-            <a class="button" href="./grpc.html">Open gRPC docs</a>
+            <a class="button" href="./mcp.html">Open MCP docs</a>
+            <a class="button" href="./clients.html">Open client setup</a>
+            <a class="button" href="./agents.html">Open team reuse</a>
           </div>
         </div>
       </section>
@@ -80,18 +85,65 @@
             <a class="button" id="overview-grpc-link" href="#" target="_blank" rel="noopener">Open live grpcui</a>
           </div>
         </article>
+
+        <article class="card protocol-card">
+          <div class="card-top">
+            <span class="protocol">MCP</span>
+            <span class="status-dot" id="mcp-status">Template only</span>
+          </div>
+          <h2>Expose once, reuse everywhere</h2>
+          <p>Document one remote MCP endpoint, one auth story, and one rollout checklist for all supported clients.</p>
+          <div class="actions">
+            <a class="button button-primary" href="./mcp.html">Open MCP docs</a>
+            <a class="button" id="overview-mcp-link" href="#" target="_blank" rel="noopener">Open MCP endpoint</a>
+          </div>
+        </article>
+
+        <article class="card protocol-card">
+          <div class="card-top">
+            <span class="protocol">Clients</span>
+            <span class="status-dot status-on" id="clients-status">Copy-ready</span>
+          </div>
+          <h2>Claude, Codex, Cursor, Gemini, OpenCode</h2>
+          <p>Ready-to-paste install/config templates plus verification steps for each supported client.</p>
+          <div class="actions">
+            <a class="button button-primary" href="./clients.html">Open client setup</a>
+          </div>
+        </article>
+
+        <article class="card protocol-card">
+          <div class="card-top">
+            <span class="protocol">Prompts</span>
+            <span class="status-dot status-on" id="prompts-status">Ready to reuse</span>
+          </div>
+          <h2>Prompt pack for repeatable work</h2>
+          <p>Copy-paste prompts for onboarding, triage, docs sync, deploy checks, and MCP rollout review.</p>
+          <div class="actions">
+            <a class="button button-primary" href="./prompts.html">Open prompts</a>
+          </div>
+        </article>
+
+        <article class="card protocol-card">
+          <div class="card-top">
+            <span class="protocol">Agents</span>
+            <span class="status-dot status-on" id="agents-status">Team rollout</span>
+          </div>
+          <h2>Skills registry + agent catalog</h2>
+          <p>Turn proven workflows into versioned skills, then bundle them into named agents teammates can reuse.</p>
+          <div class="actions">
+            <a class="button button-primary" href="./agents.html">Open team reuse</a>
+          </div>
+        </article>
       </section>
 
       <section class="card stack-card">
-        <h2>What this docs site includes</h2>
+        <h2>What this docs site covers now</h2>
         <ul class="stack-list">
-          <li><strong>Scalar</strong> for REST / OpenAPI.</li>
-          <li><strong>GraphQL contract page</strong> with schema, endpoint details, and live explorer links.</li>
-          <li><strong>gRPC contract page</strong> with synced proto files and live grpcui handoff.</li>
+          <li><strong>REST / GraphQL / gRPC</strong> contracts plus live handoffs where the current environment supports them.</li>
+          <li><strong>MCP rollout docs</strong> for exposing a single remote server and keeping client setup consistent.</li>
+          <li><strong>Copy-paste client templates</strong> for Claude, Codex, Cursor, Gemini, and OpenCode.</li>
+          <li><strong>Reusable team assets</strong> including prompts, skills registry flows, and agent packaging guidance.</li>
         </ul>
-        <p class="muted">
-          <strong>SpectaQL</strong> is still not bundled. The current GraphQL page already covers schema review plus live explorer handoff without adding another docs layer.
-        </p>
       </section>
     </main>
 
