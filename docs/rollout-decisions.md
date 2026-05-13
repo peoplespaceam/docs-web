@@ -30,7 +30,7 @@ We still need a single operator story for:
 - whether tokens are human-scoped, environment-scoped, or shared
 
 Why it matters:
-- The docs can show `Authorization: Bearer ...`, but the rollout is incomplete until the issuing workflow is real.
+- The docs can show `Authorization: Bearer ***`, but the rollout is incomplete until the issuing workflow is real.
 
 ### 2) Environment strategy
 
@@ -91,6 +91,47 @@ Tracked issue set:
 - [#4 Improve GraphQL auth onboarding in docs-web](https://github.com/peoplespaceam/docs-web/issues/4)
 - [#5 Decide whether docs-web should split API docs from operator/team docs](https://github.com/peoplespaceam/docs-web/issues/5)
 - [#6 Define MCP rollout readiness criteria before marking docs live](https://github.com/peoplespaceam/docs-web/issues/6)
+
+Current labels applied:
+- `documentation` on all five issues
+- `question` on decision issues: #2, #3, #5, #6
+- `enhancement` on implementation-facing issue: #4
+
+## Recommended resolution order
+
+Recommended order of attack:
+
+1. [#3 docs-web environment strategy](https://github.com/peoplespaceam/docs-web/issues/3)
+   - This sets the frame for the rest of the site.
+   - It determines whether labels, navigation, and deployment assumptions are single-env or multi-env.
+
+2. [#2 MCP auth and token distribution model](https://github.com/peoplespaceam/docs-web/issues/2)
+   - This is the main blocker for turning MCP docs from conceptual to operational.
+   - Without it, the MCP page can only describe intent, not a real rollout path.
+
+3. [#6 MCP rollout readiness criteria](https://github.com/peoplespaceam/docs-web/issues/6)
+   - This should be defined immediately after auth, so "pending" vs "live" is governed by an explicit rule.
+
+4. [#4 GraphQL auth onboarding](https://github.com/peoplespaceam/docs-web/issues/4)
+   - Improve the current operator-only flow once the broader environment/auth framing is settled.
+
+5. [#5 docs-web scope split decision](https://github.com/peoplespaceam/docs-web/issues/5)
+   - Important, but slightly less blocking than the environment/auth questions.
+   - Easier to answer cleanly after the core rollout shape is clearer.
+
+Short version:
+- decide **where this site points** first
+- decide **how MCP access actually works** second
+- decide **when MCP is truly live** third
+- polish **GraphQL onboarding** fourth
+- revisit **site scope split** fifth
+
+## Project tracking note
+
+These issues should also be added to the appropriate GitHub Project with an initial status such as `Todo` / `Backlog`.
+
+Current blocker:
+- the available GitHub token on the authenticated Mac node does **not** have `read:project`, so project discovery/editing is blocked until token scope is refreshed
 
 ## Implementation note
 
