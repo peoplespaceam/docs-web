@@ -1,6 +1,6 @@
 import { config } from './config';
 
-const mcpUrl = config.mcpServerUrl || 'https://mcp.example.com/mcp';
+const mcpUrl = config.mcpServerUrl || 'https://test.ps.avanesyan.am/mcp';
 const tokenPlaceholder = 'MCP_BEARER_TOKEN';
 
 export const mcpCards = [
@@ -41,11 +41,11 @@ export const mcpSnippets = [
     eyebrow: 'Team handoff',
     title: 'Shared environment bundle',
     meta: '.env / password manager note',
-    description: 'The minimum values teammates need before pasting any client-specific config. Keep the example URL until the real endpoint is published.',
+    description: 'The minimum values teammates need before pasting any client-specific config. Use the live shared endpoint and pair it with a bearer token.',
     code: `MCP_SERVER_URL=${mcpUrl}
 MCP_BEARER_TOKEN=<paste-token-here>`,
-    verify: 'curl -i "$MCP_SERVER_URL"',
-    note: 'Current state: no public PeopleSpaceAM MCP endpoint is live yet, so the placeholder URL stays intentional for now.',
+    verify: `curl -i -X POST "$MCP_SERVER_URL" -H "content-type: application/json" -H "accept: application/json, text/event-stream" --data '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-03-26","capabilities":{},"clientInfo":{"name":"curl","version":"0"}}}'`,
+    note: 'Live endpoint: https://test.ps.avanesyan.am/mcp. Keep the token alongside the URL so the shared smoke test stays identical for every client.',
   },
   {
     eyebrow: 'Server contract',
