@@ -295,3 +295,59 @@ pre,
     min-width: 560px;
   }
 }
+
+
+.graphql-tips {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.tip-card {
+  padding: 1rem;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--line);
+}
+
+.graphql-explorer-shell {
+  margin-top: 1rem;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  overflow: hidden;
+  background: #0a1220;
+}
+
+.graphql-explorer-frame {
+  min-height: 78vh;
+}
+
+.graphql-explorer-fallback {
+  padding: 1.25rem;
+}
+
+.graphql-explorer-fallback code {
+  word-break: break-word;
+}
+
+.graphql-explorer-shell .graphiql-container {
+  height: 78vh;
+  min-height: 680px;
+}
+
+.graphql-explorer-shell .graphiql-sidebar,
+.graphql-explorer-shell .graphiql-main,
+.graphql-explorer-shell .graphiql-sessions,
+.graphql-explorer-shell .graphiql-editors,
+.graphql-explorer-shell .graphiql-plugin {
+  min-height: 0;
+}
+
+@media (max-width: 900px) {
+  .graphql-explorer-frame,
+  .graphql-explorer-shell .graphiql-container {
+    min-height: 70vh;
+    height: 70vh;
+  }
+}

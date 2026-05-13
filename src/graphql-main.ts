@@ -1,9 +1,10 @@
 import './style.css';
 import graphQlSchema from './generated/miniapp-graphql-v1.graphql?raw';
 import { config, setText, wireBlobLink, wireLink } from './config';
+import { mountGraphQlExplorer } from './graphql-explorer';
 
 setText('site-title', config.siteTitle);
-setText('site-subtitle', 'GraphQL schema and live explorer handoff');
+setText('site-subtitle', 'GraphQL schema, live explorer, and test-env validation');
 setText('site-environment', config.siteEnvironment);
 setText('graphql-endpoint', config.graphQlHttpUrl || 'Not configured');
 
@@ -13,3 +14,5 @@ wireBlobLink('graphql-sdl-link', graphQlSchema, 'miniapp-graphql-v1.graphql', 'a
 
 const el = document.getElementById('sdl');
 if (el) el.textContent = graphQlSchema;
+
+mountGraphQlExplorer('graphql-explorer-root', { endpoint: config.graphQlHttpUrl });
