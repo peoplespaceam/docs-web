@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PeopleSpaceAM API docs (test)</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="inner">
+        <strong>PeopleSpaceAM</strong>
+        <span class="tag">test-facing documentation</span>
+      </div>
+      <nav class="nav">
+        <a href="./">REST (OpenAPI)</a>
+        <a href="./graphql.html">GraphQL SDL</a>
+        <a id="link-graphiql" href="#" target="_blank" rel="noopener">GraphiQL (test)</a>
+        <a id="link-grpcui" href="#" target="_blank" rel="noopener">gRPC UI (test)</a>
+      </nav>
+    </header>
+    <main>
+      <p class="lede">
+        OpenAPI is synced from the <code>contracts</code> repo at build time. Configure
+        <code>.env</code> (see <code>.env.example</code>) for test server URLs and external tools.
+      </p>
+      <div id="scalar-rest"></div>
+    </main>
+    <script type="module" src="/src/rest-main.ts"></script>
+  </body>
+</html>

@@ -1,0 +1,25 @@
+{
+  "name": "@peoplespaceam/docs-web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Public API docs (Scalar + contracts specs) targeting test environments.",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "sync-specs": "node scripts/sync-specs.mjs",
+    "predev": "npm run sync-specs",
+    "prebuild": "npm run sync-specs",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@scalar/api-reference": "^1.28.0"
+  },
+  "devDependencies": {
+    "typescript": "~5.7.2",
+    "vite": "^6.0.3"
+  }
+}

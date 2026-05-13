@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PeopleSpaceAM — Mini App GraphQL v1 (SDL)</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="inner">
+        <strong>PeopleSpaceAM</strong>
+        <span class="tag">GraphQL v1 SDL</span>
+      </div>
+      <nav class="nav">
+        <a href="./">REST (OpenAPI)</a>
+        <a href="./graphql.html">GraphQL SDL</a>
+        <a id="link-graphiql" href="#" target="_blank" rel="noopener">GraphiQL (test)</a>
+        <a id="link-grpcui" href="#" target="_blank" rel="noopener">gRPC UI (test)</a>
+      </nav>
+    </header>
+    <main class="graphql-page">
+      <p class="lede">
+        Canonical SDL lives in <code>contracts/graphql/platform-api/miniapp/v1/schema.graphql</code>.
+        This page shows the same file copied at build time. Runtime endpoint:
+        <code>POST …/miniapp/graphql/v1</code> with <code>X-Telegram-Init-Data</code>.
+      </p>
+      <pre class="sdl"><code id="sdl"></code></pre>
+    </main>
+    <script type="module" src="/src/graphql-main.ts"></script>
+  </body>
+</html>

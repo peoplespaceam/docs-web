@@ -1,0 +1,67 @@
+:root {
+  font-family:
+    system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    sans-serif;
+  line-height: 1.5;
+  color: #0f172a;
+  background: #f8fafc;
+}
+
+body {
+  margin: 0;
+}
+
+.site-header {
+  background: #0f172a;
+  color: #f8fafc;
+  padding: 0.75rem 1rem;
+}
+
+.site-header .inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  align-items: baseline;
+}
+
+.tag {
+  opacity: 0.85;
+  font-size: 0.85rem;
+}
+
+.nav {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+}
+
+.nav a {
+  color: #bae6fd;
+}
+
+.nav a[aria-disabled='true'] {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+main {
+  padding: 1rem;
+}
+
+.lede {
+  max-width: 72ch;
+}
+
+.graphql-page .sdl {
+  background: #0b1020;
+  color: #e2e8f0;
+  padding: 1rem;
+  border-radius: 8px;
+  overflow: auto;
+  max-width: min(120ch, 100%);
+  font-size: 0.85rem;
+}
