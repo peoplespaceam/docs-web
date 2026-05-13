@@ -14,7 +14,7 @@ wireLink('overview-mcp-link', config.mcpServerUrl, 'Set VITE_MCP_SERVER_URL when
 renderStatus('rest-status', true, config.restBase ? 'Live reference' : 'Static spec');
 renderStatus('graphql-status', Boolean(config.apolloSandboxUrl || config.graphQlExplorerUrl), 'Live explorer', 'Schema only');
 renderStatus('grpc-status', Boolean(config.grpcUiUrl), 'Live grpcui', 'Contracts only');
-renderStatus('mcp-status', Boolean(config.mcpServerUrl), 'Ready to wire', 'Template only');
+renderStatus('mcp-status', Boolean(config.mcpServerUrl), 'Ready to wire', 'Pending endpoint');
 renderStatus('clients-status', true, 'Copy-ready', 'Planned');
 renderStatus('prompts-status', true, 'Ready to reuse', 'Planned');
 renderStatus('agents-status', true, 'Team rollout', 'Planned');

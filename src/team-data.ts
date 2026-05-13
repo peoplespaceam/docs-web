@@ -41,11 +41,11 @@ export const mcpSnippets = [
     eyebrow: 'Team handoff',
     title: 'Shared environment bundle',
     meta: '.env / password manager note',
-    description: 'The minimum values teammates need before pasting any client-specific config.',
+    description: 'The minimum values teammates need before pasting any client-specific config. Keep the example URL until the real endpoint is published.',
     code: `MCP_SERVER_URL=${mcpUrl}
 MCP_BEARER_TOKEN=<paste-token-here>`,
     verify: 'curl -i "$MCP_SERVER_URL"',
-    note: 'If your server is not live yet, keep the placeholder URL until the edge route exists.',
+    note: 'Current state: no public PeopleSpaceAM MCP endpoint is live yet, so the placeholder URL stays intentional for now.',
   },
   {
     eyebrow: 'Server contract',
