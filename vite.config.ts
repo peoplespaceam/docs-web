@@ -11,7 +11,9 @@ export default defineConfig(({ mode }) => {
       rollupOptions: {
         input: {
           main: resolve(__dirname, 'index.html'),
+          rest: resolve(__dirname, 'rest.html'),
           graphql: resolve(__dirname, 'graphql.html'),
+          grpc: resolve(__dirname, 'grpc.html'),
         },
       },
     },

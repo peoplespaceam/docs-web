@@ -1,28 +1,15 @@
 import './style.css';
+import graphQlSchema from './generated/miniapp-graphql-v1.graphql?raw';
+import { config, setText, wireBlobLink, wireLink } from './config';
 
-void (async () => {
-  const specUrl = new URL('specs/miniapp-graphql-v1.graphql', window.location.href).toString();
-  const res = await fetch(specUrl);
-  const text = await res.text();
-  const el = document.getElementById('sdl');
-  if (el) {
-    el.textContent = text;
-  }
+setText('site-title', config.siteTitle);
+setText('site-subtitle', 'GraphQL schema and explorer handoff');
+setText('site-environment', config.siteEnvironment);
+setText('graphql-endpoint', config.graphQlHttpUrl || 'Not configured');
 
-  const graphiql = import.meta.env.VITE_GRAPHIQL_TEST_URL ?? '';
-  const grpcui = import.meta.env.VITE_GRPCUI_TEST_URL ?? '';
+wireLink('graphql-apollo-link', config.apolloSandboxUrl, 'Set VITE_APOLLO_SANDBOX_URL');
+wireLink('graphql-explorer-link', config.graphQlExplorerUrl, 'Set VITE_GRAPHQL_EXPLORER_URL');
+wireBlobLink('graphql-sdl-link', graphQlSchema, 'miniapp-graphql-v1.graphql', 'application/graphql;charset=utf-8');
 
-  for (const [id, href] of [
-    ['link-graphiql', graphiql],
-    ['link-grpcui', grpcui],
-  ] as const) {
-    const a = document.getElementById(id);
-    if (a instanceof HTMLAnchorElement) {
-      a.href = href || '#';
-      if (!href) {
-        a.setAttribute('aria-disabled', 'true');
-        a.title = `Set env for ${id}`;
-      }
-    }
-  }
-})();
+const el = document.getElementById('sdl');
+if (el) el.textContent = graphQlSchema;

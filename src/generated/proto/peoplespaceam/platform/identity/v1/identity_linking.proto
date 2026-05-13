@@ -1,0 +1,83 @@
+syntax = "proto3";
+
+package peoplespaceam.platform.identity.v1;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/peoplespaceam/contracts/gen/go/peoplespaceam/platform/identity/v1;identityv1";
+
+// Channels: "telegram", "slack", etc.
+enum Channel {
+  CHANNEL_UNSPECIFIED = 0;
+  CHANNEL_TELEGRAM = 1;
+  CHANNEL_SLACK = 2;
+}
+
+message UserIdentity {
+  Channel channel = 1;
+  string channel_user_id = 2; // tg user id, slack user id, etc.
+}
+
+message GetLinkStatusRequest {
+  UserIdentity identity = 1;
+}
+
+message GetLinkStatusResponse {
+  bool linked = 1;
+  // filled when linked=true:
+  string first_name = 2; // picked from localized_names using preferred_language
+  string last_name = 3;
+  string preferred_language = 4; // "en-US" | "ru-RU" | "hy-AM"
+  string associate_id = 5; // HR associate id
+  google.protobuf.Timestamp linked_at = 6;
+}
+
+// StartSSOLink: bot asks the platform to begin a Keycloak SSO linking flow.
+// The platform mints the session via AccessGate StartLogin and returns the
+// Keycloak authorize URL plus an opaque linking ticket the bot echoes back on
+// deep-link return.
+message StartSSOLinkRequest {
+  UserIdentity identity = 1;
+  string preferred_language = 2; // "en-US" | "ru-RU" | "hy-AM"
+}
+
+message StartSSOLinkResponse {
+  string authorize_url = 1; // Keycloak PKCE-enabled authorize URL
+  string ticket = 2; // opaque linking token echoed on return
+}
+
+// ConsumeLinkTicket: bot returns from the deep-link with the ticket; the
+// platform verifies the AccessGate session is authenticated, pulls claims,
+// resolves the HR associate, and finalizes the link. Response mirrors
+// GetLinkStatusResponse name/language/associate_id semantics so the bot can
+// greet the user immediately without a second round-trip.
+message ConsumeLinkTicketRequest {
+  UserIdentity identity = 1;
+  string ticket = 2;
+}
+
+message ConsumeLinkTicketResponse {
+  bool linked = 1;
+  string first_name = 2;
+  string last_name = 3;
+  string preferred_language = 4;
+  string associate_id = 5;
+  google.protobuf.Timestamp linked_at = 6;
+}
+
+// Unlink: bot asks the platform to revoke the AccessGate session and drop the
+// identity row so the user can re-link.
+message UnlinkRequest {
+  UserIdentity identity = 1;
+}
+
+message UnlinkResponse {
+  bool unlinked = 1;
+}
+
+service IdentityLinkingService {
+  rpc GetLinkStatus(GetLinkStatusRequest) returns (GetLinkStatusResponse);
+  rpc StartSSOLink(StartSSOLinkRequest) returns (StartSSOLinkResponse);
+  rpc ConsumeLinkTicket(ConsumeLinkTicketRequest) returns (ConsumeLinkTicketResponse);
+  rpc Unlink(UnlinkRequest) returns (UnlinkResponse);
+}

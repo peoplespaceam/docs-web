@@ -1,0 +1,220 @@
+syntax = "proto3";
+
+package attendance;
+
+option go_package = "github.com/peoplespaceam/contracts/gen/go/attendance/v1;attendance";
+
+import "google/protobuf/timestamp.proto";
+
+// Channels: "telegram", "slack", etc.
+enum Channel {
+  CHANNEL_UNSPECIFIED = 0;
+  CHANNEL_TELEGRAM = 1;
+  CHANNEL_SLACK = 2;
+}
+
+message UserIdentity {
+  Channel channel = 1;
+  string  channel_user_id = 2;   // tg user id, slack user id, etc.
+}
+
+// ───────────────────────────────────────────
+// ACCOUNT LINKING (v2 — Keycloak SSO)
+// StartSSOLink / ConsumeLinkTicket / Unlink land in Phase 4.
+// ───────────────────────────────────────────
+
+message GetLinkStatusRequest {
+  UserIdentity identity = 1;
+}
+
+message GetLinkStatusResponse {
+  bool   linked              = 1;
+  // filled when linked=true:
+  string first_name          = 2;   // picked from localized_names using preferred_language
+  string last_name           = 3;
+  string preferred_language  = 4;   // "en-US" | "ru-RU" | "hy-AM"
+  string associate_id        = 5;   // HR associate id
+  google.protobuf.Timestamp linked_at = 6;
+}
+
+// StartSSOLink: bot asks platform-api to begin a Keycloak SSO linking flow.
+// platform-api mints the session via AccessGate StartLogin and returns the
+// Keycloak authorize URL plus an opaque linking ticket the bot echoes
+// back on deep-link return.
+message StartSSOLinkRequest {
+  UserIdentity identity            = 1;
+  string       preferred_language  = 2;  // "en-US" | "ru-RU" | "hy-AM"
+}
+
+message StartSSOLinkResponse {
+  string authorize_url = 1;  // Keycloak PKCE-enabled authorize URL
+  string ticket        = 2;  // opaque linking token echoed on return
+}
+
+// ConsumeLinkTicket: bot returns from the deep-link with the ticket;
+// platform-api verifies the AccessGate session is authenticated, pulls
+// claims, resolves the HR associate, and finalizes the link. Response
+// mirrors GetLinkStatusResponse name/language/associate_id semantics so
+// the bot can greet the user immediately without a second round-trip.
+message ConsumeLinkTicketRequest {
+  UserIdentity identity = 1;
+  string       ticket   = 2;
+}
+
+message ConsumeLinkTicketResponse {
+  bool   linked             = 1;
+  string first_name         = 2;
+  string last_name          = 3;
+  string preferred_language = 4;
+  string associate_id       = 5;
+  google.protobuf.Timestamp linked_at = 6;
+}
+
+// Unlink: bot asks platform-api to revoke the AccessGate session and drop
+// the identity row so the user can re-link.
+message UnlinkRequest {
+  UserIdentity identity = 1;
+}
+
+message UnlinkResponse {
+  bool unlinked = 1;
+}
+
+// ───────────────────────────────────────────
+// VACATION REQUEST TYPES (Phase 5)
+// Read-only surface over HR's GetVacationRequestTypes endpoint. Bot uses
+// this to render the "what kind of vacation are you requesting" picker.
+// ───────────────────────────────────────────
+
+message ListVacationRequestTypesRequest {
+  UserIdentity identity = 1;
+  // Optional override. If omitted, the facade looks up associate_id from
+  // the identities row keyed by (channel, channel_user_id). If the stored
+  // associate_id is NULL (not yet HR-resolved), returns FAILED_PRECONDITION.
+  string associate_id = 2;
+}
+
+message ListVacationRequestTypesResponse {
+  repeated VacationRequestType types = 1;
+}
+
+// VacationRequestType mirrors the HR DTO shape captured in
+// internal/hr/testdata/vacation_types_example.json. The mapper in
+// internal/hr/mapper.go is the source of truth for enum translations.
+message VacationRequestType {
+  // HR-assigned row id (stable, not re-used).
+  int32 id = 1;
+  // HR semantic enum (1=Regular Vacation, 7=Maternity, 8=Baby Care, 17=PTO, …).
+  // Stable across tenants; prefer this for bot-side switches.
+  int32 vacation_request_type_enum = 2;
+  // One entry per supported locale ("hy-AM" | "ru-RU" | "en-US").
+  repeated LocalizedName localized_names = 3;
+  // data: URL (typically base64-encoded SVG) for the type's icon. Empty
+  // when HR didn't ship one.
+  string picture_path = 4;
+  // How duration is counted. See TimeCalculationType enum.
+  TimeCalculationType time_calculation_type = 5;
+  // Intraday / same-day-only request (Paid Time Off, Business Trip Hours).
+  bool only_same_day = 6;
+  // Cap on a single request's length. 0 means unbounded.
+  double per_request_max_count = 7;
+  // HR-supplied default duration for this type (e.g. 1096 days for Baby
+  // Care Leave). Absent for most types.
+  Duration default_duration = 8;
+  // Optional running balance entries. Empty for types without a balance
+  // gate; typically length 1 when present (Paid Time Off).
+  repeated VacationBalance balance = 9;
+  // How many days in the past the start date may be. Absent when HR
+  // doesn't constrain past submission for this type.
+  SubmissionWindow past_submission = 10;
+  // Symmetric to past_submission for future-dated starts.
+  SubmissionWindow future_submission = 11;
+  // Approval workflow hints. Both true for most types.
+  bool admin_approve_needed = 12;
+  bool manager_approve_needed = 13;
+  // Paid / Unpaid / None. See PaymentType.
+  PaymentType payment_type = 14;
+  // Vacation (multi-day) vs TimeOff (intraday).
+  RequestGroup group = 15;
+  // HR-assigned sort key.
+  int32 order_id = 16;
+  // HR's legacy category integer. Observed to equal vacation_request_type_enum
+  // for every entry on the current tenant, but HR doesn't contract that — keep
+  // both so divergence stays visible. Prefer vacation_request_type_enum for
+  // bot-side switches.
+  int32 vacation_request_type = 17;
+}
+
+message LocalizedName {
+  string language = 1;  // BCP-47 tag: "hy-AM" | "ru-RU" | "en-US"
+  string name     = 2;
+}
+
+message Duration {
+  TimeCalculationType time_calculation_type = 1;
+  double              duration              = 2;
+}
+
+message SubmissionWindow {
+  TimeCalculationType time_calculation_type = 1;
+  int32               submission_period     = 2;
+}
+
+message VacationBalance {
+  double available_balance          = 1;
+  double available_days             = 2;
+  double days_by_the_end_of_year    = 3;
+  double balance_from_last_year     = 4;
+  double used_days_for_current_year = 5;
+  bool   is_primary                 = 6;
+  int32  temp_schedule_type         = 7;
+  bool   is_in_maternity            = 8;
+  // The associate this balance belongs to. On self-scoped GetVacationRequestTypes
+  // calls it's always the caller, but HR populates it and we surface it so the
+  // same message is reusable from endpoints that return other people's balances.
+  // HR's raw payload also carries a back-reference to the parent vacation-type
+  // row here; we drop it intentionally (circular, 10x wire bloat, same data as
+  // the enclosing VacationRequestType).
+  AssociateRef associate = 9;
+}
+
+// AssociateRef is the minimal HR associate identifier. We don't surface
+// employmentLifeCycleDetails — it's a deep tree the bot never needs, and
+// modelling it would bloat the proto and couple us to HR's internal schema.
+message AssociateRef {
+  int32 id        = 1;  // HR associate id
+  int32 person_id = 2;  // HR person id
+}
+
+enum TimeCalculationType {
+  TIME_CALCULATION_TYPE_UNSPECIFIED   = 0;
+  TIME_CALCULATION_TYPE_CALENDAR_DAYS = 1;
+  TIME_CALCULATION_TYPE_HOURS         = 2;
+  TIME_CALCULATION_TYPE_HALF_DAY      = 3;
+}
+
+enum PaymentType {
+  PAYMENT_TYPE_UNSPECIFIED = 0;
+  PAYMENT_TYPE_PAID        = 1;
+  PAYMENT_TYPE_UNPAID      = 2;
+}
+
+enum RequestGroup {
+  REQUEST_GROUP_UNSPECIFIED = 0;
+  REQUEST_GROUP_VACATION    = 1;  // HR group 1 — multi-day vacations
+  REQUEST_GROUP_TIME_OFF    = 2;  // HR group 2 — intraday absences (sick leave, etc.)
+  REQUEST_GROUP_ATTENDANCE  = 3;  // HR group 3 — attendance records (remote work, overtime, business meetings)
+}
+
+// ───────────── Service ─────────────
+
+service AttendanceFacade {
+  rpc GetLinkStatus (GetLinkStatusRequest) returns (GetLinkStatusResponse);
+  // Phase 4 — SSO linking (Phase B in implementation plan).
+  rpc StartSSOLink (StartSSOLinkRequest) returns (StartSSOLinkResponse);
+  rpc ConsumeLinkTicket (ConsumeLinkTicketRequest) returns (ConsumeLinkTicketResponse);
+  rpc Unlink (UnlinkRequest) returns (UnlinkResponse);
+  // Phase 5 — read-only vacation-type catalog for the request picker.
+  rpc ListVacationRequestTypes (ListVacationRequestTypesRequest) returns (ListVacationRequestTypesResponse);
+  // Phase 8 will add: CreateVacationRequest.
+}

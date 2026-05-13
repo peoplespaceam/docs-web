@@ -5,3 +5,6 @@ public/specs/*
 !public/specs/.gitkeep
 !public/specs/miniapp.yaml
 !public/specs/miniapp-graphql-v1.graphql
+!public/specs/proto
+!public/specs/proto/**
+!public/specs/proto-index.json

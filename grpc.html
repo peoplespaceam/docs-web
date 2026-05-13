@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PeopleSpaceAM Platform Docs — gRPC</title>
+  </head>
+  <body>
+    <header class="site-header shell-header">
+      <div class="inner">
+        <div>
+          <strong id="site-title">PeopleSpaceAM Platform Docs</strong>
+          <div class="tag" id="site-subtitle">gRPC contracts and grpcui handoff</div>
+        </div>
+        <span class="pill" id="site-environment">Current environment</span>
+      </div>
+      <nav class="nav">
+        <a href="./">Overview</a>
+        <a href="./rest.html">REST</a>
+        <a href="./graphql.html">GraphQL</a>
+        <a href="./grpc.html">gRPC</a>
+      </nav>
+    </header>
+
+    <main class="shell-main">
+      <section class="card slim-card">
+        <p class="eyebrow">gRPC</p>
+        <h1>Protocol contracts</h1>
+        <p class="lede">
+          Browse the synced protobuf files directly here. If you run a protected grpcui instance for a target environment, link it via env and this page will expose it.
+        </p>
+        <div class="actions wrap-actions">
+          <a class="button button-primary" id="grpcui-link" href="#" target="_blank" rel="noopener">Open grpcui</a>
+        </div>
+      </section>
+
+      <section class="card stack-card">
+        <h2>Proto files</h2>
+        <div id="proto-list" class="proto-list"></div>
+      </section>
+    </main>
+
+    <script type="module" src="/src/grpc-main.ts"></script>
+  </body>
+</html>

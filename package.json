@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "Public API docs (Scalar + contracts specs) targeting test environments.",
+  "description": "PeopleSpaceAM platform docs hub for REST, GraphQL, and gRPC contracts.",
   "engines": {
     "node": ">=22"
   },

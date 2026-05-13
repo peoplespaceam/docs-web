@@ -1,0 +1,5 @@
+[
+  "proto/attendance/v1/attendance_facade.proto",
+  "proto/peoplespaceam/platform/identity/v1/identity_linking.proto",
+  "proto/peoplespaceam/platform/requests/v1/vacation_request_catalog.proto"
+]

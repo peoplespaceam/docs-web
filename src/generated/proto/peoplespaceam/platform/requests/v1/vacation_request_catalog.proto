@@ -1,0 +1,142 @@
+syntax = "proto3";
+
+package peoplespaceam.platform.requests.v1;
+
+option go_package = "github.com/peoplespaceam/contracts/gen/go/peoplespaceam/platform/requests/v1;requestsv1";
+
+// Channels: "telegram", "slack", etc.
+enum Channel {
+  CHANNEL_UNSPECIFIED = 0;
+  CHANNEL_TELEGRAM = 1;
+  CHANNEL_SLACK = 2;
+}
+
+message UserIdentity {
+  Channel channel = 1;
+  string channel_user_id = 2; // tg user id, slack user id, etc.
+}
+
+message ListVacationRequestTypesRequest {
+  UserIdentity identity = 1;
+  // Optional override. If omitted, the serving application looks up
+  // associate_id from the identities row keyed by (channel, channel_user_id).
+  // If the stored associate_id is NULL (not yet HR-resolved), it returns
+  // FAILED_PRECONDITION.
+  string associate_id = 2;
+}
+
+message ListVacationRequestTypesResponse {
+  repeated VacationRequestType types = 1;
+}
+
+// VacationRequestType mirrors the HR DTO shape captured in platform-api's
+// internal/hr/testdata/vacation_types_example.json. The platform-api mapper
+// remains the source of truth for enum translations.
+message VacationRequestType {
+  // HR-assigned row id (stable, not re-used).
+  int32 id = 1;
+  // HR semantic enum (1=Regular Vacation, 7=Maternity, 8=Baby Care, 17=PTO).
+  // Stable across tenants; prefer this for bot-side switches.
+  int32 vacation_request_type_enum = 2;
+  // One entry per supported locale ("hy-AM" | "ru-RU" | "en-US").
+  repeated LocalizedName localized_names = 3;
+  // data: URL (typically base64-encoded SVG) for the type's icon. Empty when
+  // HR did not ship one.
+  string picture_path = 4;
+  // How duration is counted. See TimeCalculationType enum.
+  TimeCalculationType time_calculation_type = 5;
+  // Intraday / same-day-only request (Paid Time Off, Business Trip Hours).
+  bool only_same_day = 6;
+  // Cap on a single request's length. 0 means unbounded.
+  double per_request_max_count = 7;
+  // HR-supplied default duration for this type. Absent for most types.
+  Duration default_duration = 8;
+  // Optional running balance entries. Empty for types without a balance gate;
+  // typically length 1 when present (Paid Time Off).
+  repeated VacationBalance balance = 9;
+  // How many days in the past the start date may be. Absent when HR does not
+  // constrain past submission for this type.
+  SubmissionWindow past_submission = 10;
+  // Symmetric to past_submission for future-dated starts.
+  SubmissionWindow future_submission = 11;
+  // Approval workflow hints. Both true for most types.
+  bool admin_approve_needed = 12;
+  bool manager_approve_needed = 13;
+  // Paid / Unpaid / None. See PaymentType.
+  PaymentType payment_type = 14;
+  // Vacation (multi-day) vs TimeOff (intraday).
+  RequestGroup group = 15;
+  // HR-assigned sort key.
+  int32 order_id = 16;
+  // HR's legacy category integer. Observed to equal
+  // vacation_request_type_enum for every entry on the current tenant, but HR
+  // does not contract that; keep both so divergence stays visible. Prefer
+  // vacation_request_type_enum for bot-side switches.
+  int32 vacation_request_type = 17;
+}
+
+message LocalizedName {
+  string language = 1; // BCP-47 tag: "hy-AM" | "ru-RU" | "en-US"
+  string name = 2;
+}
+
+message Duration {
+  TimeCalculationType time_calculation_type = 1;
+  double duration = 2;
+}
+
+message SubmissionWindow {
+  TimeCalculationType time_calculation_type = 1;
+  int32 submission_period = 2;
+}
+
+message VacationBalance {
+  double available_balance = 1;
+  double available_days = 2;
+  double days_by_the_end_of_year = 3;
+  double balance_from_last_year = 4;
+  double used_days_for_current_year = 5;
+  bool is_primary = 6;
+  int32 temp_schedule_type = 7;
+  bool is_in_maternity = 8;
+  // The associate this balance belongs to. On self-scoped
+  // ListVacationRequestTypes calls it is always the caller, but HR populates it
+  // and we surface it so the same message is reusable from endpoints that
+  // return other people's balances.
+  AssociateRef associate = 9;
+}
+
+// AssociateRef is the minimal HR associate identifier. We do not surface
+// employmentLifeCycleDetails; it is a deep tree the bot does not need, and
+// modeling it would couple this contract to HR's internal schema.
+message AssociateRef {
+  int32 id = 1; // HR associate id
+  int32 person_id = 2; // HR person id
+}
+
+enum TimeCalculationType {
+  TIME_CALCULATION_TYPE_UNSPECIFIED = 0;
+  TIME_CALCULATION_TYPE_CALENDAR_DAYS = 1;
+  TIME_CALCULATION_TYPE_HOURS = 2;
+  TIME_CALCULATION_TYPE_HALF_DAY = 3;
+}
+
+enum PaymentType {
+  PAYMENT_TYPE_UNSPECIFIED = 0;
+  PAYMENT_TYPE_PAID = 1;
+  PAYMENT_TYPE_UNPAID = 2;
+}
+
+enum RequestGroup {
+  REQUEST_GROUP_UNSPECIFIED = 0;
+  REQUEST_GROUP_VACATION = 1; // HR group 1 - multi-day vacations
+  REQUEST_GROUP_TIME_OFF = 2; // HR group 2 - intraday absences
+  REQUEST_GROUP_ATTENDANCE = 3; // HR group 3 - attendance records
+}
+
+// VacationRequestCatalogService owns read-only request metadata needed to
+// render request creation flows. Command RPCs such as CreateVacationRequest
+// belong on a future VacationRequestService in vacation_requests.proto.
+service VacationRequestCatalogService {
+  rpc ListVacationRequestTypes(ListVacationRequestTypesRequest) returns (ListVacationRequestTypesResponse);
+}

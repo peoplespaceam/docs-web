@@ -3,28 +3,100 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PeopleSpaceAM API docs (test)</title>
+    <title>PeopleSpaceAM Platform Docs</title>
   </head>
   <body>
-    <header class="site-header">
+    <header class="site-header shell-header">
       <div class="inner">
-        <strong>PeopleSpaceAM</strong>
-        <span class="tag">test-facing documentation</span>
+        <div>
+          <strong id="site-title">PeopleSpaceAM Platform Docs</strong>
+          <div class="tag" id="site-subtitle">Contracts, explorers, and integration references</div>
+        </div>
+        <span class="pill" id="site-environment">Current environment</span>
       </div>
       <nav class="nav">
-        <a href="./">REST (OpenAPI)</a>
-        <a href="./graphql.html">GraphQL SDL</a>
-        <a id="link-graphiql" href="#" target="_blank" rel="noopener">GraphiQL (test)</a>
-        <a id="link-grpcui" href="#" target="_blank" rel="noopener">gRPC UI (test)</a>
+        <a href="./">Overview</a>
+        <a href="./rest.html">REST</a>
+        <a href="./graphql.html">GraphQL</a>
+        <a href="./grpc.html">gRPC</a>
       </nav>
     </header>
-    <main>
-      <p class="lede">
-        OpenAPI is synced from the <code>contracts</code> repo at build time. Configure
-        <code>.env</code> (see <code>.env.example</code>) for test server URLs and external tools.
-      </p>
-      <div id="scalar-rest"></div>
+
+    <main class="shell-main">
+      <section class="hero card">
+        <div>
+          <p class="eyebrow">Platform reference</p>
+          <h1>One place for REST, GraphQL, and gRPC docs</h1>
+          <p class="lede">
+            This site ships the checked-in contracts with the docs build, then layers the right explorer
+            or viewer on top of each protocol.
+          </p>
+          <div class="actions">
+            <a class="button button-primary" href="./rest.html">Open REST reference</a>
+            <a class="button" href="./graphql.html">Open GraphQL docs</a>
+            <a class="button" href="./grpc.html">Open gRPC docs</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="card-grid">
+        <article class="card protocol-card">
+          <div class="card-top">
+            <span class="protocol">REST</span>
+            <span class="status-dot status-on" id="rest-status">Configured</span>
+          </div>
+          <h2>OpenAPI via Scalar</h2>
+          <p>Interactive reference for the Mini App REST surface, backed by the canonical OpenAPI contract.</p>
+          <div class="meta">Spec: <code>/specs/miniapp.yaml</code></div>
+          <div class="actions">
+            <a class="button button-primary" href="./rest.html">Open Scalar</a>
+            <a class="button" id="overview-openapi-link" href="#">Raw OpenAPI</a>
+          </div>
+        </article>
+
+        <article class="card protocol-card">
+          <div class="card-top">
+            <span class="protocol">GraphQL</span>
+            <span class="status-dot" id="graphql-status">Partially configured</span>
+          </div>
+          <h2>SDL + explorer handoff</h2>
+          <p>Browse the canonical SDL, inspect the endpoint, and jump into Apollo Sandbox or GraphiQL when configured.</p>
+          <div class="meta">Schema: <code>/specs/miniapp-graphql-v1.graphql</code></div>
+          <div class="actions">
+            <a class="button button-primary" href="./graphql.html">Open GraphQL docs</a>
+            <a class="button" id="overview-apollo-link" href="#" target="_blank" rel="noopener">Apollo Sandbox</a>
+          </div>
+        </article>
+
+        <article class="card protocol-card">
+          <div class="card-top">
+            <span class="protocol">gRPC</span>
+            <span class="status-dot" id="grpc-status">Partially configured</span>
+          </div>
+          <h2>Proto browser + grpcui handoff</h2>
+          <p>Browse tracked protobuf files directly here and jump into grpcui when you have a protected instance available.</p>
+          <div class="meta">Contracts synced from <code>contracts/proto</code></div>
+          <div class="actions">
+            <a class="button button-primary" href="./grpc.html">Open gRPC docs</a>
+            <a class="button" id="overview-grpc-link" href="#" target="_blank" rel="noopener">Open grpcui</a>
+          </div>
+        </article>
+      </section>
+
+      <section class="card stack-card">
+        <h2>What this docs site includes</h2>
+        <ul class="stack-list">
+          <li><strong>Scalar</strong> for REST / OpenAPI.</li>
+          <li><strong>GraphQL contract page</strong> with SDL, endpoint details, and explorer links.</li>
+          <li><strong>gRPC contract page</strong> with synced proto files and grpcui handoff.</li>
+        </ul>
+        <p class="muted">
+          <strong>SpectaQL</strong> is not bundled right now. It overlaps with the GraphQL page and adds another generation layer.
+          If you want static GraphQL reference pages later, we can add it deliberately instead of mixing four competing UIs at once.
+        </p>
+      </section>
     </main>
-    <script type="module" src="/src/rest-main.ts"></script>
+
+    <script type="module" src="/src/home-main.ts"></script>
   </body>
 </html>

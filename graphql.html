@@ -3,29 +3,49 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PeopleSpaceAM — Mini App GraphQL v1 (SDL)</title>
+    <title>PeopleSpaceAM Platform Docs — GraphQL</title>
   </head>
   <body>
-    <header class="site-header">
+    <header class="site-header shell-header">
       <div class="inner">
-        <strong>PeopleSpaceAM</strong>
-        <span class="tag">GraphQL v1 SDL</span>
+        <div>
+          <strong id="site-title">PeopleSpaceAM Platform Docs</strong>
+          <div class="tag" id="site-subtitle">GraphQL schema and explorer handoff</div>
+        </div>
+        <span class="pill" id="site-environment">Current environment</span>
       </div>
       <nav class="nav">
-        <a href="./">REST (OpenAPI)</a>
-        <a href="./graphql.html">GraphQL SDL</a>
-        <a id="link-graphiql" href="#" target="_blank" rel="noopener">GraphiQL (test)</a>
-        <a id="link-grpcui" href="#" target="_blank" rel="noopener">gRPC UI (test)</a>
+        <a href="./">Overview</a>
+        <a href="./rest.html">REST</a>
+        <a href="./graphql.html">GraphQL</a>
+        <a href="./grpc.html">gRPC</a>
       </nav>
     </header>
-    <main class="graphql-page">
-      <p class="lede">
-        Canonical SDL lives in <code>contracts/graphql/platform-api/miniapp/v1/schema.graphql</code>.
-        This page shows the same file copied at build time. Runtime endpoint:
-        <code>POST …/miniapp/graphql/v1</code> with <code>X-Telegram-Init-Data</code>.
-      </p>
-      <pre class="sdl"><code id="sdl"></code></pre>
+
+    <main class="shell-main">
+      <section class="card slim-card">
+        <p class="eyebrow">GraphQL</p>
+        <h1>Mini App GraphQL v1</h1>
+        <p class="lede">
+          Canonical SDL is synced from the contracts repo. Use this page for schema review, then jump to your configured explorer.
+        </p>
+        <div class="endpoint-box">
+          <div><strong>Runtime endpoint:</strong> <code id="graphql-endpoint">Not configured</code></div>
+          <div><strong>Auth:</strong> <code>X-Telegram-Init-Data</code></div>
+        </div>
+        <div class="actions wrap-actions">
+          <a class="button button-primary" id="graphql-apollo-link" href="#" target="_blank" rel="noopener">Apollo Sandbox</a>
+          <a class="button" id="graphql-explorer-link" href="#" target="_blank" rel="noopener">GraphQL Explorer</a>
+          <a class="button" id="graphql-sdl-link" href="#">Raw SDL</a>
+        </div>
+      </section>
+
+      <section class="card stack-card">
+        <h2>Schema</h2>
+        <pre class="sdl"><code id="sdl"></code></pre>
+      </section>
     </main>
+
     <script type="module" src="/src/graphql-main.ts"></script>
   </body>
 </html>
