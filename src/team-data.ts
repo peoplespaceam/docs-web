@@ -141,7 +141,10 @@ enabled = true`,
     "peoplespaceam": {
       "type": "remote",
       "url": "${mcpUrl}",
-      "enabled": true
+      "enabled": true,
+      "headers": {
+        "Authorization": "Bearer $${tokenPlaceholder}"
+      }
     }
   }
 }`,

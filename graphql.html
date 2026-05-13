@@ -10,9 +10,9 @@
       <div class="inner">
         <div>
           <strong id="site-title">PeopleSpaceAM Platform Docs</strong>
-          <div class="tag" id="site-subtitle">GraphQL schema, live explorer, and test-env validation</div>
+          <div class="tag" id="site-subtitle">GraphQL schema, embedded explorer, and integration notes</div>
         </div>
-        <span class="pill" id="site-environment">Current environment</span>
+        <span class="pill" id="site-environment">Environment not set</span>
       </div>
       <nav class="nav">
         <a href="./">Overview</a>
@@ -31,16 +31,14 @@
         <p class="eyebrow">GraphQL</p>
         <h1>Mini App GraphQL v1</h1>
         <p class="lede">
-          Canonical SDL is synced from the contracts repo. The live endpoint is reachable, and this page includes an interactive explorer for test-env validation. Live requests need valid <code>X-Telegram-Init-Data</code>.
+          Canonical SDL is synced from the contracts repo. The live endpoint is reachable, and this page includes an interactive explorer for direct integration checks. Live requests need valid <code>X-Telegram-Init-Data</code>.
         </p>
         <div class="endpoint-box">
           <div><strong>Live endpoint:</strong> <code id="graphql-endpoint">Not configured</code></div>
           <div><strong>Auth:</strong> <code>X-Telegram-Init-Data</code></div>
         </div>
         <div class="actions wrap-actions">
-          <a class="button button-primary" id="graphql-apollo-link" href="#" target="_blank" rel="noopener">Open Apollo Sandbox</a>
-          <a class="button" id="graphql-explorer-link" href="#" target="_blank" rel="noopener">Open external explorer</a>
-          <a class="button" id="graphql-sdl-link" href="#">Download SDL</a>
+          <a class="button button-primary" id="graphql-sdl-link" href="#">Download SDL</a>
         </div>
       </section>
 
@@ -49,10 +47,10 @@
           <div>
             <h2>Interactive explorer</h2>
             <p class="muted">
-              Use the built-in GraphiQL console below for real test-env requests. Paste your raw <code>X-Telegram-Init-Data</code> value into the <strong>Headers</strong> editor, then run introspection or queries directly against the live endpoint.
+              Use the built-in GraphiQL console below for real requests. Paste your raw <code>X-Telegram-Init-Data</code> value into the <strong>Headers</strong> editor, then run introspection or queries directly against the live endpoint.
             </p>
           </div>
-          <span class="pill">Test env</span>
+          <span class="pill">Configured environment</span>
         </div>
         <div class="graphql-tips">
           <div class="tip-card">

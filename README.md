@@ -5,7 +5,7 @@ PeopleSpaceAM platform docs site.
 ## What it serves
 
 - **REST:** embedded **Scalar** reference from the canonical OpenAPI contract.
-- **GraphQL:** a polished SDL page plus optional handoff to **Apollo Sandbox** or another configured explorer.
+- **GraphQL:** a polished SDL page plus an embedded **GraphiQL** explorer for live requests.
 - **gRPC:** synced `.proto` browser plus optional handoff to **grpcui**.
 
 This repo is intentionally self-contained at deploy time: checked-in specs are committed under `public/specs/`, and `scripts/sync-specs.mjs` refreshes them from `contracts` when that checkout is available.
@@ -24,9 +24,8 @@ This repo is intentionally self-contained at deploy time: checked-in specs are c
 - `VITE_SITE_ENVIRONMENT`
 - `VITE_MINIAPP_API_BASE` (preferred) or `VITE_MINIAPP_API_TEST_BASE`
 - `VITE_GRAPHQL_HTTP_URL`
-- `VITE_GRAPHQL_EXPLORER_URL`
-- `VITE_APOLLO_SANDBOX_URL`
 - `VITE_GRPCUI_URL` (preferred) or `VITE_GRPCUI_TEST_URL`
+- `VITE_MCP_SERVER_URL`
 - `VITE_BASE_PATH`
 
 ## Recommendation
@@ -34,7 +33,7 @@ This repo is intentionally self-contained at deploy time: checked-in specs are c
 Use this stack:
 
 - **Scalar** for REST
-- **Apollo Sandbox or GraphiQL** for interactive GraphQL
+- embedded **GraphiQL** for interactive GraphQL
 - **grpcui** for live gRPC exploration
 - this site itself as the protocol hub and static contract host
 

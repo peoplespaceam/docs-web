@@ -1,11 +1,9 @@
 export const config = {
   siteTitle: import.meta.env.VITE_SITE_TITLE || 'PeopleSpaceAM Platform Docs',
   siteSubtitle: import.meta.env.VITE_SITE_SUBTITLE || 'Contracts, explorers, and integration references',
-  siteEnvironment: import.meta.env.VITE_SITE_ENVIRONMENT || 'Current environment',
+  siteEnvironment: import.meta.env.VITE_SITE_ENVIRONMENT || 'Environment not set',
   restBase: (import.meta.env.VITE_MINIAPP_API_BASE || import.meta.env.VITE_MINIAPP_API_TEST_BASE || '').replace(/\/$/, ''),
   graphQlHttpUrl: import.meta.env.VITE_GRAPHQL_HTTP_URL || '',
-  graphQlExplorerUrl: import.meta.env.VITE_GRAPHQL_EXPLORER_URL || import.meta.env.VITE_GRAPHIQL_TEST_URL || '',
-  apolloSandboxUrl: import.meta.env.VITE_APOLLO_SANDBOX_URL || '',
   grpcUiUrl: import.meta.env.VITE_GRPCUI_URL || import.meta.env.VITE_GRPCUI_TEST_URL || '',
   mcpServerUrl: import.meta.env.VITE_MCP_SERVER_URL || '',
 };

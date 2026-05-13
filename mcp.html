@@ -10,9 +10,9 @@
       <div class="inner">
         <div>
           <strong id="site-title">PeopleSpaceAM Platform Docs</strong>
-          <div class="tag" id="site-subtitle">MCP endpoint strategy and rollout notes</div>
+          <div class="tag" id="site-subtitle">MCP endpoint, auth contract, and rollout notes</div>
         </div>
-        <span class="pill" id="site-environment">Current environment</span>
+        <span class="pill" id="site-environment">Environment not set</span>
       </div>
       <nav class="nav">
         <a href="./">Overview</a>
@@ -33,16 +33,16 @@
             <p class="eyebrow">MCP</p>
             <h1>Expose once, reuse across every client</h1>
             <p class="lede">
-              This section is the rollout contract for the shared remote MCP server. The public PeopleSpaceAM endpoint is now live: one URL, one auth story, one smoke test, and no bespoke setup drift per teammate.
+              This section is the rollout contract for the shared remote MCP server: one URL, one auth story, one smoke test, and no bespoke setup drift per teammate.
             </p>
           </div>
-          <span class="status-dot status-on" id="mcp-page-status">Live endpoint configured</span>
+          <span class="status-dot status-on" id="mcp-page-status">Configured via environment</span>
         </div>
         <div class="endpoint-box">
-          <div><strong>Canonical MCP URL:</strong> <code id="mcp-url">https://test.ps.avanesyan.am/mcp</code></div>
-              <div><strong>Current rollout state:</strong> <code>Live on test.ps.avanesyan.am</code></div>
+          <div><strong>Canonical MCP URL:</strong> <code id="mcp-url">Not configured</code></div>
+          <div><strong>Current rollout state:</strong> <code id="mcp-rollout-state">Endpoint not configured yet</code></div>
           <div><strong>Recommended transport:</strong> <code>HTTP</code></div>
-          <div><strong>Recommended auth:</strong> <code>Authorization: Bearer ...</code></div>
+          <div><strong>Recommended auth:</strong> <code id="mcp-auth-mode">Define auth before rollout</code></div>
         </div>
         <div class="actions">
           <a class="button button-primary" href="./clients.html">Open client templates</a>

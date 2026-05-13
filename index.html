@@ -12,7 +12,7 @@
           <strong id="site-title">PeopleSpaceAM Platform Docs</strong>
           <div class="tag" id="site-subtitle">Contracts, explorers, and integration references</div>
         </div>
-        <span class="pill" id="site-environment">Current environment</span>
+        <span class="pill" id="site-environment">Environment not set</span>
       </div>
       <nav class="nav">
         <a href="./">Overview</a>
@@ -61,14 +61,13 @@
         <article class="card protocol-card">
           <div class="card-top">
             <span class="protocol">GraphQL</span>
-            <span class="status-dot" id="graphql-status">Partially configured</span>
+            <span class="status-dot" id="graphql-status">Schema only</span>
           </div>
-          <h2>Schema + live explorer handoff</h2>
-          <p>Review the canonical SDL, inspect the live endpoint, and jump straight into Apollo Sandbox for the active test surface.</p>
+          <h2>Schema + embedded explorer</h2>
+          <p>Review the canonical SDL, inspect the live endpoint, and use the built-in explorer from the GraphQL docs page.</p>
           <div class="meta">Schema: <code>/specs/miniapp-graphql-v1.graphql</code></div>
           <div class="actions">
             <a class="button button-primary" href="./graphql.html">Open GraphQL docs</a>
-            <a class="button" id="overview-apollo-link" href="#" target="_blank" rel="noopener">Open Apollo Sandbox</a>
           </div>
         </article>
 
@@ -89,10 +88,10 @@
         <article class="card protocol-card">
           <div class="card-top">
             <span class="protocol">MCP</span>
-            <span class="status-dot" id="mcp-status">Pending endpoint</span>
+            <span class="status-dot" id="mcp-status">Rollout pending</span>
           </div>
           <h2>Expose once, reuse everywhere</h2>
-          <p>Client setup is ready, but the actual PeopleSpaceAM remote MCP endpoint has not been published yet.</p>
+          <p>Remote MCP endpoint, auth contract, and client setup notes for a shared team rollout.</p>
           <div class="actions">
             <a class="button button-primary" href="./mcp.html">Open MCP docs</a>
             <a class="button" id="overview-mcp-link" href="#" target="_blank" rel="noopener">Open MCP endpoint</a>
@@ -139,7 +138,7 @@
       <section class="card stack-card">
         <h2>What this docs site covers now</h2>
         <ul class="stack-list">
-          <li><strong>REST / GraphQL / gRPC</strong> contracts plus live handoffs where the current environment supports them.</li>
+          <li><strong>REST / GraphQL / gRPC</strong> contracts plus live handoffs where the configured environment supports them.</li>
           <li><strong>MCP rollout docs</strong> for exposing a single remote server and keeping client setup consistent.</li>
           <li><strong>Copy-paste client templates</strong> for Claude, Codex, Cursor, Gemini, and OpenCode.</li>
           <li><strong>Reusable team assets</strong> including prompts, skills registry flows, and agent packaging guidance.</li>
