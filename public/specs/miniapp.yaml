@@ -6,10 +6,10 @@ info:
     Canonical HTTP contract for Telegram Mini App business endpoints owned by
     `platform-api`.
 
-    These routes are intended to run behind AccessGate proxy. Browser clients
-    authenticate through AccessGate; `platform-api` receives trusted identity
-    context from the proxy and uses `channelUserId` to load the linked Telegram
-    identity.
+    These routes authenticate Telegram Mini App requests with
+    `X-Telegram-Init-Data`. `platform-api` extracts the Telegram user id from
+    initData and loads the OTP-linked PeopleSpace identity. PeopleSpace calls
+    use platform system/service-account credentials, not end-user access tokens.
 servers:
   - url: https://{publicHost}
     description: Public PeopleSpaceAM edge host
@@ -97,7 +97,7 @@ paths:
         "400":
           $ref: "#/components/responses/BadRequest"
         "401":
-          $ref: "#/components/responses/UserTokenUnavailable"
+          $ref: "#/components/responses/Unauthorized"
         "404":
           $ref: "#/components/responses/RequestTypeNotFound"
         "502":
@@ -110,7 +110,7 @@ paths:
         - MiniApp
       operationId: submitMiniAppRequest
       summary: Submit a request
-      description: Validates and submits the selected request type to PeopleSpace as the linked user.
+      description: Validates and submits the selected request type to PeopleSpace for the OTP-linked identity using platform service-account credentials.
       parameters:
         - $ref: "#/components/parameters/ChannelUserIdOptional"
         - $ref: "#/components/parameters/Channel"
@@ -130,7 +130,7 @@ paths:
         "400":
           $ref: "#/components/responses/BadRequest"
         "401":
-          $ref: "#/components/responses/UserTokenUnavailable"
+          $ref: "#/components/responses/Unauthorized"
         "404":
           $ref: "#/components/responses/RequestTypeNotFound"
         "422":
@@ -151,7 +151,7 @@ paths:
         - MiniApp
       operationId: saveMiniAppRequestDraft
       summary: Save a request draft
-      description: Validates and saves an in-progress request draft as the linked user.
+      description: Validates and saves an in-progress request draft for the OTP-linked identity using platform service-account credentials.
       parameters:
         - $ref: "#/components/parameters/ChannelUserIdOptional"
         - $ref: "#/components/parameters/Channel"
@@ -171,7 +171,7 @@ paths:
         "400":
           $ref: "#/components/responses/BadRequest"
         "401":
-          $ref: "#/components/responses/UserTokenUnavailable"
+          $ref: "#/components/responses/Unauthorized"
         "404":
           $ref: "#/components/responses/RequestTypeNotFound"
         "422":
@@ -213,7 +213,7 @@ components:
       schema:
         type: string
         minLength: 1
-      description: Telegram user identifier for the linked identity.
+      description: Deprecated for production. Telegram user id is derived from `X-Telegram-Init-Data`; this parameter is only useful for local dev bypasses.
     ChannelUserIdOptional:
       name: channelUserId
       in: query
@@ -221,7 +221,7 @@ components:
       schema:
         type: string
         minLength: 1
-      description: Telegram user identifier. If omitted on POST requests, `clientContext.telegramUser` is used.
+      description: Deprecated for production. Telegram user id is derived from `X-Telegram-Init-Data`; this parameter is only useful for local dev bypasses.
     Channel:
       name: channel
       in: query
@@ -240,8 +240,8 @@ components:
         application/json:
           schema:
             $ref: "#/components/schemas/ErrorResponse"
-    UserTokenUnavailable:
-      description: Linked user token is unavailable; the user must relink or refresh auth.
+    Unauthorized:
+      description: Telegram initData is missing, invalid, expired, or maps to an unlinked identity.
       content:
         application/json:
           schema:
