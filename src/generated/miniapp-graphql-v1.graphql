@@ -16,7 +16,6 @@ input RequestTypesFilter {
 type MiniAppViewer {
   telegramUserId: String!
   linked: Boolean!
-  requiresRelink: Boolean!
   firstName: String
   lastName: String
   associateId: String

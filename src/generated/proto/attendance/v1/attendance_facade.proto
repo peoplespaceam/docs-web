@@ -19,8 +19,7 @@ message UserIdentity {
 }
 
 // ───────────────────────────────────────────
-// ACCOUNT LINKING (v2 — Keycloak SSO)
-// StartSSOLink / ConsumeLinkTicket / Unlink land in Phase 4.
+// ACCOUNT LINKING
 // ───────────────────────────────────────────
 
 message GetLinkStatusRequest {
@@ -37,41 +36,7 @@ message GetLinkStatusResponse {
   google.protobuf.Timestamp linked_at = 6;
 }
 
-// StartSSOLink: bot asks platform-api to begin a Keycloak SSO linking flow.
-// platform-api mints the session via AccessGate StartLogin and returns the
-// Keycloak authorize URL plus an opaque linking ticket the bot echoes
-// back on deep-link return.
-message StartSSOLinkRequest {
-  UserIdentity identity            = 1;
-  string       preferred_language  = 2;  // "en-US" | "ru-RU" | "hy-AM"
-}
-
-message StartSSOLinkResponse {
-  string authorize_url = 1;  // Keycloak PKCE-enabled authorize URL
-  string ticket        = 2;  // opaque linking token echoed on return
-}
-
-// ConsumeLinkTicket: bot returns from the deep-link with the ticket;
-// platform-api verifies the AccessGate session is authenticated, pulls
-// claims, resolves the HR associate, and finalizes the link. Response
-// mirrors GetLinkStatusResponse name/language/associate_id semantics so
-// the bot can greet the user immediately without a second round-trip.
-message ConsumeLinkTicketRequest {
-  UserIdentity identity = 1;
-  string       ticket   = 2;
-}
-
-message ConsumeLinkTicketResponse {
-  bool   linked             = 1;
-  string first_name         = 2;
-  string last_name          = 3;
-  string preferred_language = 4;
-  string associate_id       = 5;
-  google.protobuf.Timestamp linked_at = 6;
-}
-
-// Unlink: bot asks platform-api to revoke the AccessGate session and drop
-// the identity row so the user can re-link.
+// Unlink drops the identity row so the user can re-link.
 message UnlinkRequest {
   UserIdentity identity = 1;
 }
@@ -210,9 +175,6 @@ enum RequestGroup {
 
 service AttendanceFacade {
   rpc GetLinkStatus (GetLinkStatusRequest) returns (GetLinkStatusResponse);
-  // Phase 4 — SSO linking (Phase B in implementation plan).
-  rpc StartSSOLink (StartSSOLinkRequest) returns (StartSSOLinkResponse);
-  rpc ConsumeLinkTicket (ConsumeLinkTicketRequest) returns (ConsumeLinkTicketResponse);
   rpc Unlink (UnlinkRequest) returns (UnlinkResponse);
   // Phase 5 — read-only vacation-type catalog for the request picker.
   rpc ListVacationRequestTypes (ListVacationRequestTypesRequest) returns (ListVacationRequestTypesResponse);
