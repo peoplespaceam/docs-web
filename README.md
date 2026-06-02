@@ -8,7 +8,7 @@ PeopleSpaceAM platform docs site.
 - **GraphQL:** a polished SDL page plus an embedded **GraphiQL** explorer for live requests.
 - **gRPC:** synced `.proto` browser plus optional handoff to **grpcui**.
 
-This repo is intentionally self-contained at deploy time: checked-in specs are committed under `public/specs/`, and `scripts/sync-specs.mjs` refreshes them from `contracts` when that checkout is available.
+This repo is intentionally self-contained at deploy time: checked-in specs are committed under `public/specs/`, and `scripts/sync-specs.mjs` refreshes them from the `platform/contracts` checkout when that checkout is available (sibling `../platform/contracts`, or set `CONTRACTS_ROOT`).
 
 ## Synced contract inputs
 
