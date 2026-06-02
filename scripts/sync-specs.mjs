@@ -11,7 +11,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, '..');
 const contracts = process.env.CONTRACTS_ROOT
   ? resolve(root, process.env.CONTRACTS_ROOT)
-  : join(root, '..', 'contracts');
+  : join(root, '..', 'platform', 'contracts');
 const outDir = join(root, 'public', 'specs');
 const generatedDir = join(root, 'src', 'generated');
 const protoOutDir = join(outDir, 'proto');
@@ -51,8 +51,8 @@ if (!existsSync(contracts)) {
     console.error(
       `sync-specs: contracts not found at ${contracts} and checked-in specs are missing:\n` +
         missing.map((dest) => `  - ${dest}`).join('\n') +
-        '\nLocal: clone peoplespaceam/contracts next to peoplespaceam/docs-web, or set CONTRACTS_ROOT.\n' +
-        'Example: CONTRACTS_ROOT=contracts npm run sync-specs',
+        '\nLocal: clone peoplespaceam/platform next to peoplespaceam/docs-web (contracts live at platform/contracts), or set CONTRACTS_ROOT.\n' +
+        'Example: CONTRACTS_ROOT=../platform/contracts npm run sync-specs',
     );
     process.exit(1);
   }
